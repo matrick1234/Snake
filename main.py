@@ -1,4 +1,5 @@
 import pygame
+import random
 pygame.init()
 res = (600,400)
 fps = 3
@@ -9,7 +10,8 @@ clock = pygame.time.Clock()
 speed = 20
 direction = "East"
 snakePos = [300,200]
-applePos = [500,200]
+#applePos = [500,200]
+applePos = [random.randint(10, 590), random.randint(10, 390)]
 
 def MoveSnake(direction,speed):
     if direction == "North":
@@ -21,8 +23,7 @@ def MoveSnake(direction,speed):
     if direction == "West":
         snakePos[0] -= speed
 
-appleRect = pygame.Rect(applePos[0],applePos[1], 20, 20)
-pygame.draw.rect(screen,(0,0,0),appleRect)
+
     
 
 while running: 
@@ -43,11 +44,15 @@ while running:
                 running = False
             
     MoveSnake(direction,speed)
-    testRect = pygame.Rect(snakePos[0],snakePos[1],30,30)
+    appleRect = pygame.Rect(applePos[0],applePos[1], 10, 10)
+    pygame.draw.rect(screen,(0,0,255),appleRect)
+    snakeRect = pygame.Rect(snakePos[0],snakePos[1],30,30)
 
     screen.fill((255,0,0))
 
-    pygame.draw.rect(screen,(0,255,0),testRect)
+    pygame.draw.rect(screen,(0,255,0),snakeRect)
+
+    pygame.draw.rect(screen,(0,0,255),appleRect)
 
     pygame.display.update()
     clock.tick(fps)
