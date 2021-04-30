@@ -1,17 +1,25 @@
 import pygame
 pygame.init()
 res = (600,400)
-fps = 60
+fps = 30
 screen = pygame.display.set_mode(res)
 pygame.display.set_caption("Snake")
 running = True 
 clock = pygame.time.Clock()
-speed = 10
-
-direction = ()
+speed = 1
+direction = "East"
 snakePos = [300,200]
-North = snakePos[1] += speed
 
+def MoveSnake(direction,speed):
+    if direction == "North":
+        snakePos[1] -= speed
+    if direction == "South":
+        snakePos[1] += speed
+    if direction == "East":
+        snakePos[0] += speed
+    if direction == "West":
+        snakePos[0] -= speed
+    
 
 while running: 
     for event in pygame.event.get():
@@ -19,19 +27,18 @@ while running:
             pygame.quit()
             quit()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                
             if event.key == pygame.K_UP:
-                North
+                direction = "North"
             if event.key == pygame.K_DOWN:
-                snakePos[1] += 10
+                direction = "South"
             if event.key == pygame.K_RIGHT:
-                snakePos[0] += 10
+                direction = "East"
             if event.key == pygame.K_LEFT:
-                snakePos[0] -= 10
+                direction = "West"
             if event.key == pygame.K_ESCAPE:
                 running = False
-
+            
+    MoveSnake(direction,speed)
     testRect = pygame.Rect(snakePos[0],snakePos[1],50,50)
 
     screen.fill((255,0,0))
