@@ -9,6 +9,7 @@ running = True
 clock = pygame.time.Clock()
 speed = 20
 direction = "East"
+
 snakePos = [300,200]
 #applePos = [500,200]
 applePos = [random.randint(10, 590), random.randint(10, 390)]
@@ -23,10 +24,17 @@ def MoveSnake(direction,speed):
     if direction == "West":
         snakePos[0] -= speed
 
+def EatRect(applePos, snakePos):
+    if applePos[0] >= snakePos[0] and applePos[0] <= snakePos[0] + 30:
+        if applePos[1] >= snakePos[1] and applePos[1] <= snakePos[1] - 30:
+            
+
+
+
+
 
     
-
-while running: 
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -43,6 +51,8 @@ while running:
             if event.key == pygame.K_ESCAPE:
                 running = False
             
+        
+         
     MoveSnake(direction,speed)
     appleRect = pygame.Rect(applePos[0],applePos[1], 10, 10)
     pygame.draw.rect(screen,(0,0,255),appleRect)
@@ -53,7 +63,7 @@ while running:
     pygame.draw.rect(screen,(0,255,0),snakeRect)
 
     pygame.draw.rect(screen,(0,0,255),appleRect)
-
+    
     pygame.display.update()
     clock.tick(fps)
-
+    
