@@ -6,11 +6,11 @@ screen = pygame.display.set_mode(res)
 pygame.display.set_caption("Snake")
 running = True 
 clock = pygame.time.Clock()
+speed = 10
 
-
+direction = ()
 snakePos = [300,200]
-
-
+North = snakePos[1] += speed
 
 
 while running: 
@@ -19,16 +19,20 @@ while running:
             pygame.quit()
             quit()
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                
             if event.key == pygame.K_UP:
-                snakePos[1] -= 10
+                North
             if event.key == pygame.K_DOWN:
                 snakePos[1] += 10
             if event.key == pygame.K_RIGHT:
                 snakePos[0] += 10
             if event.key == pygame.K_LEFT:
                 snakePos[0] -= 10
+            if event.key == pygame.K_ESCAPE:
+                running = False
 
-    testRect = pygame.Rect(snakePos[0],snakePos[1],100,150)
+    testRect = pygame.Rect(snakePos[0],snakePos[1],50,50)
 
     screen.fill((255,0,0))
 
