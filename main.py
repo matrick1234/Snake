@@ -14,6 +14,7 @@ snakePos = [300,200]
 #applePos = [500,200]
 applePos = [random.randint(10, 590), random.randint(10, 390)]
 
+appleOnScreen = False
 def MoveSnake(direction,speed):
     if direction == "North":
         snakePos[1] -= speed
@@ -24,13 +25,22 @@ def MoveSnake(direction,speed):
     if direction == "West":
         snakePos[0] -= speed
 
-def EatRect(applePos, snakePos):
-    if applePos[0] >= snakePos[0] and applePos[0] <= snakePos[0] + 30:
-        if applePos[1] >= snakePos[1] and applePos[1] <= snakePos[1] - 30:
+#def EatRect(applePos, snakePos):
+    #if applePos[0] <= snakePos[0]:
+        #running = False #applePos[0] >= snakePos[0] and applePos[0] <= snakePos[0] + 30:
+        
+def spawnApple(appleRect,playerRect):
+    if pygame.Rect.contains(appleRect, playerRect):
+        applePos = [random.randint(10, 590), random.randint(10, 390)]
+        spawnApple(appleRect, playerRect)
+    else:
+        pygame.draw.rect(screen,(0,0,255),appleRect)
+
+            
+        
             
 
-
-
+#if applePos[1] >= snakePos[1] and applePos[1] <= snakePos[1] - 30:
 
 
     
@@ -49,13 +59,17 @@ while running:
             if event.key == pygame.K_LEFT:
                 direction = "West"
             if event.key == pygame.K_ESCAPE:
-                running = False
+                pygame.quit()
             
-        
+            
+            
+    #if not appleOnScreen:
+
          
+        
     MoveSnake(direction,speed)
+    #EatRect(applePos, snakePos)
     appleRect = pygame.Rect(applePos[0],applePos[1], 10, 10)
-    pygame.draw.rect(screen,(0,0,255),appleRect)
     snakeRect = pygame.Rect(snakePos[0],snakePos[1],30,30)
 
     screen.fill((255,0,0))
