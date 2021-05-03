@@ -20,9 +20,15 @@ appleOnScreen = False
 #def EatRect(applePos, snakePos):
     #if applePos[0] <= snakePos[0]:
         #running = False #applePos[0] >= snakePos[0] and applePos[0] <= snakePos[0] + 30:
-        
-class Snake:
-    def Move(direction,speed):
+player = Snake()        
+class Snake(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.score = 0
+        self.x = 300
+        self.y = 200
+    
+    def move(self,direction,speed):
         if direction == "North":
             snakePos[1] -= speed
         if direction == "South":
@@ -32,7 +38,7 @@ class Snake:
         if direction == "West":
             snakePos[0] -= speed
     
-    def draw(self):
+    def draw():
         pygame.draw.rect(screen,(0,255,0),snakeRect)
 
 
@@ -55,15 +61,13 @@ class Apple:
         if collisionDetect(self, Snake):
             print("tasty apple")
 
-class Game: 
+#class Game: 
     
-    def AppleEat(self, applePos[1], applePos[0], snakePos[1], snakePos[0]):
-        if snakePos[0] >= applePos[0] and snakePos[0] <= applePos[0] + 30:
-            if snakePos[1] >= applePos[1] and snakePos[1] >= snakePos[1] +30:
-                print("tasty apple")
-
-
-
+    #def AppleEat(self, applePos[1], applePos[0], snakePos[1], snakePos[0]):
+        #if snakePos[0] >= applePos[0] and snakePos[0] <= applePos[0] + 30:
+            #if snakePos[1] >= applePos[1] and snakePos[1] >= snakePos[1] +30:
+                #return True    
+        #return False 
 
 
 
@@ -91,15 +95,19 @@ while running:
 
          
         
-    MoveSnake(direction,speed)
+    #MoveSnake(direction,speed)
     #EatRect(applePos, snakePos)
     appleRect = pygame.Rect(applePos[0],applePos[1], 10, 10)
     snakeRect = pygame.Rect(snakePos[0],snakePos[1],30,30)
-
+    Snake.draw()
+    Snake.move(direction, speed)
+    #self.snake.move()
+    
     screen.fill((255,0,0))
-
+    #pygame.spawnApple.update()
     
 
     pygame.display.update()
     clock.tick(fps)
     
+pygame.quit()
