@@ -15,32 +15,56 @@ snakePos = [300,200]
 applePos = [random.randint(10, 590), random.randint(10, 390)]
 
 appleOnScreen = False
-def MoveSnake(direction,speed):
-    if direction == "North":
-        snakePos[1] -= speed
-    if direction == "South":
-        snakePos[1] += speed
-    if direction == "East":
-        snakePos[0] += speed
-    if direction == "West":
-        snakePos[0] -= speed
+
 
 #def EatRect(applePos, snakePos):
     #if applePos[0] <= snakePos[0]:
         #running = False #applePos[0] >= snakePos[0] and applePos[0] <= snakePos[0] + 30:
         
-def spawnApple(appleRect,playerRect):
-    if pygame.Rect.contains(appleRect, playerRect):
-        applePos = [random.randint(10, 590), random.randint(10, 390)]
-        spawnApple(appleRect, playerRect)
-    else:
+class Snake:
+    def Move(direction,speed):
+        if direction == "North":
+            snakePos[1] -= speed
+        if direction == "South":
+            snakePos[1] += speed
+        if direction == "East":
+            snakePos[0] += speed
+        if direction == "West":
+            snakePos[0] -= speed
+    
+    def draw(self):
+        pygame.draw.rect(screen,(0,255,0),snakeRect)
+
+
+
+class Apple: 
+
+    def draw(self):
         pygame.draw.rect(screen,(0,0,255),appleRect)
+    
 
-            
-        
-            
+    def spawnApple(appleRect,playerRect):
+        if pygame.Rect.contains(appleRect, playerRect):
+            applePos = [random.randint(10, 590), random.randint(10, 390)]
+            spawnApple(appleRect, playerRect)
+        else:
+            pygame.draw.rect(screen,(0,0,255),appleRect)
+            appleOnScreen = True
 
-#if applePos[1] >= snakePos[1] and applePos[1] <= snakePos[1] - 30:
+    def moveApple(self):
+        if collisionDetect(self, Snake):
+            print("tasty apple")
+
+class Game: 
+    
+    def AppleEat(self, applePos[1], applePos[0], snakePos[1], snakePos[0]):
+        if snakePos[0] >= applePos[0] and snakePos[0] <= applePos[0] + 30:
+            if snakePos[1] >= applePos[1] and snakePos[1] >= snakePos[1] +30:
+                print("tasty apple")
+
+
+
+
 
 
     
@@ -74,10 +98,8 @@ while running:
 
     screen.fill((255,0,0))
 
-    pygame.draw.rect(screen,(0,255,0),snakeRect)
-
-    pygame.draw.rect(screen,(0,0,255),appleRect)
     
+
     pygame.display.update()
     clock.tick(fps)
     
