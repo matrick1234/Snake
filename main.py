@@ -9,13 +9,13 @@ pygame.display.set_caption("Snake")
 running = True 
 clock = pygame.time.Clock()
 speed = 20
-direction = "East"
+
 
 #snakePos = [300,200]
 #applePos = [500,200]
 applePos = [random.randint(10, 590), random.randint(10, 390)]
 
-appleOnScreen = False
+
 
 
 #def EatRect(applePos, snakePos):
@@ -26,15 +26,17 @@ class Snake(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.score = 0
+        self.direction = "East"
         self.x = 300
         self.y = 200
         self.head = [[300,200],30,30]
-        self.image = pygame.transform.scale(pygame.image.load("snake.png"),(30,30))
-        self.image_init = self.image
-        self.rect = self.image.get_rect()
+        
+        #self.image = pygame.transform.scale(pygame.image.load("snake.png"),(30,30))
+        #self.image_init = self.image
+        #self.rect = self.image.get_rect()
     
     
-    def move(self,direction,speed):
+    def move(self, applePos):
         if direction == "North":
             snakePos[1] -= speed
         if direction == "South":
@@ -52,23 +54,21 @@ class Snake(pygame.sprite.Sprite):
 
 
 class Apple: 
+    def __init__(self):
+        self.position = [random.randint(10, 590), random.randint(10, 390)]
+        self.AppleOnScreen = True
+
 
     def draw(self):
         pygame.draw.rect(screen,(0,0,255),appleRect)
     
 
-    def spawnApple(appleRect,playerRect):
-        if pygame.Rect.contains(appleRect, playerRect):
-            applePos = [random.randint(10, 590), random.randint(10, 390)]
-            spawnApple(appleRect, playerRect)
-        else:
-            pygame.draw.rect(screen,(0,0,255),appleRect)
-            appleOnScreen = True
-
-    def moveApple(self):
-        if collisionDetect(self, Snake):
-            print("tasty apple")
-
+    def spawnApple(self):
+        if self.appleOnScreen == False:
+            self.position = [random.randint(10,590), random.randint(10,390)]
+            self.AppleOnScreen = True
+        return self.position 
+        
 #class Game: 
     
     #def AppleEat(self, applePos[1], applePos[0], snakePos[1], snakePos[0]):
