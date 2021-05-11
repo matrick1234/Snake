@@ -1,5 +1,6 @@
 import pygame
 import random
+import sys
 pygame.init()
 res = (600,400)
 fps = 3
@@ -10,7 +11,7 @@ clock = pygame.time.Clock()
 speed = 20
 direction = "East"
 
-snakePos = [300,200]
+#snakePos = [300,200]
 #applePos = [500,200]
 applePos = [random.randint(10, 590), random.randint(10, 390)]
 
@@ -20,13 +21,18 @@ appleOnScreen = False
 #def EatRect(applePos, snakePos):
     #if applePos[0] <= snakePos[0]:
         #running = False #applePos[0] >= snakePos[0] and applePos[0] <= snakePos[0] + 30:
-player = Snake()        
+#player = Snake()        
 class Snake(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.score = 0
         self.x = 300
         self.y = 200
+        self.head = [[300,200],30,30]
+        self.image = pygame.transform.scale(pygame.image.load("snake.png"),(30,30))
+        self.image_init = self.image
+        self.rect = self.image.get_rect()
+    
     
     def move(self,direction,speed):
         if direction == "North":
@@ -38,8 +44,10 @@ class Snake(pygame.sprite.Sprite):
         if direction == "West":
             snakePos[0] -= speed
     
-    def draw():
-        pygame.draw.rect(screen,(0,255,0),snakeRect)
+    #def 
+
+    #def draw():
+        #pygame.draw.rect(screen,(0,255,0),snakeRect)
 
 
 
@@ -91,6 +99,7 @@ while running:
             
             
             
+            
     #if not appleOnScreen:
 
          
@@ -98,7 +107,7 @@ while running:
     #MoveSnake(direction,speed)
     #EatRect(applePos, snakePos)
     appleRect = pygame.Rect(applePos[0],applePos[1], 10, 10)
-    snakeRect = pygame.Rect(snakePos[0],snakePos[1],30,30)
+    #snakeRect = pygame.Rect(snakePos[0],snakePos[1],30,30)
     Snake.draw()
     Snake.move(direction, speed)
     #self.snake.move()
