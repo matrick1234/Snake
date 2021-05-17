@@ -2,11 +2,8 @@
 import pygame
 import random
 import sys
-pygame.init()
-res = (600,400)
-fps = 24
+#pygame.init()
 
-screen = pygame.display.set_mode(res)
 
 #running = True 
 clock = pygame.time.Clock()
@@ -33,7 +30,7 @@ class Snake(pygame.sprite.Sprite):
         self.position = (300,200)
         #self.x = 300
         #self.y = 200
-        self.head = [[300,200],[50,50],[50,50]]
+        self.head = [[100,50],[90,50],[80,50]]
         self.move = self.direction
         #self.image = pygame.transform.scale(pygame.image.load("snake.png"),(30,30))
         #self.image_init = self.image
@@ -114,7 +111,11 @@ class Apple:
 snake = Snake()
 Apple = Apple()
 
-    
+res = (500,500)
+fps = 24
+
+screen = pygame.display.set_mode(res)    
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
