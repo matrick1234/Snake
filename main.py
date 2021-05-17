@@ -4,18 +4,19 @@ import random
 import sys
 pygame.init()
 res = (600,400)
-fps = 3
+fps = 24
+
 screen = pygame.display.set_mode(res)
-pygame.display.set_caption("Snake")
-running = True 
+
+#running = True 
 clock = pygame.time.Clock()
-speed = 10
+speed = 5
 score = 0
 
 
 #snakePos = [300,200]
 #applePos = [500,200]
-applePos = [random.randint(10, 590), random.randint(10, 390)]
+#applePos = [random.randint(10, 590), random.randint(10, 390)]
 
 
 
@@ -30,49 +31,47 @@ class Snake(pygame.sprite.Sprite):
         self.score = 0
         self.direction = "East"
         self.position = (300,200)
-        self.x = 300
-        self.y = 200
-        self.head = [[300,200],30,30]
+        #self.x = 300
+        #self.y = 200
+        self.head = [[300,200],[50,50],[50,50]]
         self.move = self.direction
         #self.image = pygame.transform.scale(pygame.image.load("snake.png"),(30,30))
         #self.image_init = self.image
         #self.rect = self.image.get_rect()
     
     
-    def move(self, snakePos):
+    def move(self, applePos):
         if self.direction == "North":
-            self.y -= speed
+            self.position[1] -= speed
         if self.direction == "South":
-            self.y += speed
+            self.position[1] += speed
         if self.direction == "East":
-            self.x += speed
+            self.position[0] += speed
         if self.direction == "West":
-            self.x -= speed
-        self.head.insert(0, list(self.x))
-        self.head.insert(0, list(self.y))
-        if self.x == applePos[0]:
-            if self.y == applePos[1]:
-                return 1 
+            self.position[0] -= speed
+        self.head.insert(0, list(self.position))
+        #self.head.insert(0,self.position)
+        if self.position == applePos:
+            return 1 
         else:
             self.head.pop()
             return 0
 
     def Death(self):
-        if self.x > 590 or self.x < 0:
+        if self.position[0] > 590 or self.position[0] < 0:
             return 1 
-        elif self.y > 390 or self.y <0:
+        elif self.position[1] > 390 or self.position[1] <0:
             return 1 
         for snakeBody in self.head[1:]:
-            if self.x == snakeBody:
-                if self.y == snakeBody:
-                    return 1
+            if self.position == snakeBody:
+                return 1
         return 0
 
     def getBody(self):
         return self.head
 
     def getHeadPos(self):
-        return self.x, self.y
+        return self.position
     
     #def SnakeHead(self):
         
@@ -116,7 +115,7 @@ snake = Snake()
 Apple = Apple()
 
     
-while running:
+while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -135,19 +134,19 @@ while running:
     
     applePos = Apple.spawnApple()
 
-    if (snake.move(applePos)==1):
+    if (snake.position==applePos):
         score += 1
         Apple.setFoodOnScreen(False)
     
-    screen.fill((255,255,255))
+    screen.fill(pygame.Color(255,255,255))
     for pos in snake.getBody():
-        pygame.draw.rect(screen,(0,255,0),pygame.Rect(pos[0], pos[1], 30, 30))
+        pygame.draw.rect(screen, pygame.Color(0,255,0),pygame.Rect(pos[0], pos[1], 30, 30))
     pygame.draw.rect(screen, pygame.Color(255,0,0),pygame.Rect(applePos[0], applePos[1],20,20))
     if (snake.Death()==1):
         pygame.quit()
         quit()
-    pygame.screen.set_caption("wow Snake. Score: " + str(score))
-    pygame.screen.update()
+    pygame.display.set_caption("Snake. Score: " + str(score))
+    pygame.display.update()
     clock.tick(fps)
 
 
