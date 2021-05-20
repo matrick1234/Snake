@@ -2,7 +2,7 @@
 import pygame
 import random
 import sys
-#pygame.init()
+pygame.init()
 
 
 #running = True 
@@ -15,16 +15,70 @@ score = 0
 #applePos = [500,200]
 #applePos = [random.randint(10, 590), random.randint(10, 390)]
 
-
-
-
 #def EatRect(applePos, snakePos):
     #if applePos[0] <= snakePos[0]:
         #running = False #applePos[0] >= snakePos[0] and applePos[0] <= snakePos[0] + 30:
 #player = Snake()        
+
+
+snake = Snake()
+Apple = Apple()
+
+res = (500,500)
+fps = 24
+
+screen = pygame.display.set_mode(res)    
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                direction = "North"
+            if event.key == pygame.K_DOWN:
+                direction = "South"
+            if event.key == pygame.K_RIGHT:
+                direction = "East"
+            if event.key == pygame.K_LEFT:
+                direction = "West"
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
+    
+    applePos = Apple.spawnApple()
+
+    if (snake.position==applePos):
+        score += 1
+        Apple.setFoodOnScreen(False)
+    
+    screen.fill(pygame.Color(225,225,225))
+    for pos in snake.getBody():
+        pygame.draw.rect(screen, pygame.Color(0,255,0),pygame.Rect(pos[0], pos[1], 30, 30))
+    pygame.draw.rect(screen, pygame.Color(255,0,0),pygame.Rect(applePos[0], applePos[1],20,20))
+    if (snake.Death()==1):
+        pygame.quit()
+        quit()
+    pygame.display.set_caption("Snake. Score: " + str(score))
+
+    pygame.display.update()
+    
+    clock.tick.tick_busy_loop(30)
+    #fps.tick(24)
+
+
+
+
+            
+            
+    #if not appleOnScreen:
+
+pygame.quit()
+
+
 class Snake(pygame.sprite.Sprite):
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
+        #pygame.sprite.Sprite.__init__(self)
         self.score = 0
         self.direction = "East"
         self.position = (300,200)
@@ -80,7 +134,7 @@ class Snake(pygame.sprite.Sprite):
 
 class Apple: 
     def __init__(self):
-        self.position = [random.randint(10, 590), random.randint(10, 390)]
+        self.position = [random.randint(10, 490), random.randint(10, 490)]
         self.AppleOnScreen = True
     
 
@@ -93,7 +147,7 @@ class Apple:
 
     def spawnApple(self):
         if self.AppleOnScreen == False:
-            self.position = [random.randint(10,590), random.randint(10,390)]
+            self.position = [random.randint(10,490), random.randint(10,490)]
             self.AppleOnScreen = True
         return self.position
 
@@ -107,54 +161,3 @@ class Apple:
             #if snakePos[1] >= applePos[1] and snakePos[1] >= snakePos[1] +30:
                 #return True    
         #return False 
-
-snake = Snake()
-Apple = Apple()
-
-res = (500,500)
-fps = 24
-
-screen = pygame.display.set_mode(res)    
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                direction = "North"
-            if event.key == pygame.K_DOWN:
-                direction = "South"
-            if event.key == pygame.K_RIGHT:
-                direction = "East"
-            if event.key == pygame.K_LEFT:
-                direction = "West"
-            if event.key == pygame.K_ESCAPE:
-                pygame.quit()
-    
-    applePos = Apple.spawnApple()
-
-    if (snake.position==applePos):
-        score += 1
-        Apple.setFoodOnScreen(False)
-    
-    screen.fill(pygame.Color(255,255,255))
-    for pos in snake.getBody():
-        pygame.draw.rect(screen, pygame.Color(0,255,0),pygame.Rect(pos[0], pos[1], 30, 30))
-    pygame.draw.rect(screen, pygame.Color(255,0,0),pygame.Rect(applePos[0], applePos[1],20,20))
-    if (snake.Death()==1):
-        pygame.quit()
-        quit()
-    pygame.display.set_caption("Snake. Score: " + str(score))
-    pygame.display.update()
-    clock.tick(fps)
-
-
-
-
-            
-            
-    #if not appleOnScreen:
-
-  
