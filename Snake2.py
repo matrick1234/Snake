@@ -61,7 +61,7 @@ class Snake():
 
 
 
-class Apple: 
+class Apple(pygame.sprite.Sprite): 
     def __init__(self):
         self.position = [random.randrange(1,50)*10, random.randrange(1,50)*10]
         self.AppleOnScreen = True
