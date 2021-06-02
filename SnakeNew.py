@@ -15,9 +15,9 @@ class Snake(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(pygame.image.load("Snake.png"),(40,40))
         self.rect = self.image.get_rect()
         self.direction = "East"
-        self.rect.centrex = (300)
-        self.rect.centrey = (200)
-        self.position = [self.rect.centrex,self.rect.centrey]
+        self.rect.centerx = (300)
+        self.rect.centery = (200)
+        self.position = [self.rect.centerx,self.rect.centery]
         self.head = [[self.position[0],self.position[1]],30,30]
         #self.head = [[self.position[0],self.position[1]],[self.position[0]-10,self.position[1]],[self.position[0]-20,self.position[1]]]
         self.Turning = self.direction
@@ -128,16 +128,18 @@ while True:
         snake.direction="West"
     applePos = Apple.spawnApple()
 
-    
+    if (pygame.sprite.spritecollideany(snake, all_sprites_list)==True):
+        score += 1
+        Apple.setFoodOnScreen(False)
+        snake.head.append([snake.position[0]-10,snake.position[1]])
     
     screen.fill(pygame.Color(225,225,225))
     for pos in snake.getBody():
-        pygame.draw.rect(screen, pygame.Color(0,255,0),pygame.Rect(pos[0], pos[1], 20, 20)
+        snake.rect
+        #pygame.draw.rect(screen, pygame.Color(0,255,0),snake.rect(pos[0], pos[1], 20, 20))
+        #pygame.draw.rect(screen, pygame.Color(0,255,0),pygame.Rect(pos[0], pos[1], 20, 20))
         #bodyPiece=pygame.draw.rect(screen, pygame.Color(0,255,0),pygame.Rect(pos[0], pos[1], 20, 20))
-        if (pygame.Rect.colliderect(snake.rect,Apple.rect) == True):
-            score += 1
-            Apple.setFoodOnScreen(False)
-            snake.head.append([snake.position[0]-10,snake.position[1]])
+    
             #len(snake.head)*10
             #
     #pygame.draw.rect(screen, pygame.Color(255,0,0),pygame.Rect(applePos[0], applePos[1],40,40))
