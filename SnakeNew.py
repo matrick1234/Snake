@@ -126,7 +126,10 @@ while True:
         snake.direction="East"
     if keysPressed[ord('a')]:
         snake.direction="West"
-    applePos = Apple.spawnApple()
+    #applePos = Apple.spawnApple()
+
+    for pos in snake.getBody():
+        snake.rect
 
     if (pygame.sprite.spritecollideany(snake, all_sprites_list)==True):
         score += 1
@@ -134,8 +137,7 @@ while True:
         snake.head.append([snake.position[0]-10,snake.position[1]])
     
     screen.fill(pygame.Color(225,225,225))
-    for pos in snake.getBody():
-        snake.rect
+    
         #pygame.draw.rect(screen, pygame.Color(0,255,0),snake.rect(pos[0], pos[1], 20, 20))
         #pygame.draw.rect(screen, pygame.Color(0,255,0),pygame.Rect(pos[0], pos[1], 20, 20))
         #bodyPiece=pygame.draw.rect(screen, pygame.Color(0,255,0),pygame.Rect(pos[0], pos[1], 20, 20))
@@ -152,5 +154,5 @@ while True:
     if (snake.Death()==1):
         Lose()
     pygame.display.set_caption("Snake. Score: " + str(score))
-    #pygame.display.update()
+    pygame.display.update()
     clock.tick(30)
