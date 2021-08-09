@@ -3,6 +3,10 @@ import random
 import sys
 import time
 pygame.init()
+#SnakeColour = (random.randint(0,255),(random.randint(0,255),(random.randint(0,255))))
+#r = (random.randint(0,255))
+#g = (random.randint(0,255))
+#b = (random.randint(0,255))
 
 clock = pygame.time.Clock()
 speed = 5
@@ -14,6 +18,9 @@ class Snake():
         self.position = [300,200]
         self.head = [[100,50],[90,50],[80,50]]
         self.Turning = self.direction
+        self.r = (random.randint(0,255))
+        self.g = (random.randint(0,255))
+        self.b = (random.randint(0,255))
 
     def Turning(self,turn):
         if turn == "East" and not self.direction == "West":
@@ -43,6 +50,10 @@ class Snake():
             self.head.pop()
             return 0
         
+    #def Colour(self,r,g,b):
+        #self.r = (random.randint(0,255))
+        #self.g = (random.randint(0,255))
+        #self.b = (random.randint(0,255))
 
     def Death(self):
         if self.position[0] > 490 or self.position[0] < 0:
@@ -126,12 +137,16 @@ while True:
     if(snake.move(ApplePos)==1):
         score += 1
         Apple.setAppleOnScreen()
-        print(Apple.AppleOnScreen)
+        snake.r = (random.randint(0,255))
+        snake.g = (random.randint(0,255))
+        snake.b = (random.randint(0,255))
+
+        
 
     screen.fill(pygame.Color(255,255,255))
-
+    
     for pos in snake.getBody():
-        pygame.draw.rect(screen, pygame.Color(0,255,0),pygame.Rect(pos[0], pos[1], 10, 10))
+        pygame.draw.rect(screen, pygame.Color(snake.r,snake.g,snake.b),pygame.Rect(pos[0], pos[1], 10, 10))
     
     pygame.draw.rect(screen, pygame.Color(255,0,0), pygame.Rect(ApplePos[0],ApplePos[1],10,10))
 
