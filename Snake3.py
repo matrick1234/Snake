@@ -3,15 +3,8 @@ import random
 import sys
 import time
 pygame.init()
-#SnakeColour = (random.randint(0,255),(random.randint(0,255),(random.randint(0,255))))
-#r = (random.randint(0,255))
-#g = (random.randint(0,255))
-#b = (random.randint(0,255))
 
-clock = pygame.time.Clock()
-speed = 5
-score = 0 
-
+#Snake is the player controlled entity
 class Snake():
     def __init__(self):
         self.direction = "East" 
@@ -22,6 +15,7 @@ class Snake():
         self.g = (random.randint(0,255))
         self.b = (random.randint(0,255))
 
+    #This is to stop the player from being able to turn 180 degrees
     def Turning(self,turn):
         if turn == "East" and not self.direction == "West":
             self.direction = "East" 
@@ -32,7 +26,7 @@ class Snake():
         if turn == "South" and not self.direction == "North":
             self.direction = "South"   
    
-
+    #This type of movement so the snake is moving constantly and the user only controls when to turn
     def move(self, ApplePos):
         if self.direction == "North":
             self.position[1] -= speed
@@ -50,11 +44,7 @@ class Snake():
             self.head.pop()
             return 0
         
-    #def Colour(self,r,g,b):
-        #self.r = (random.randint(0,255))
-        #self.g = (random.randint(0,255))
-        #self.b = (random.randint(0,255))
-
+    #I made the outer bounds that the snake can travel 10 less then the actual border so it works better with the snake hitbox
     def Death(self):
         if self.position[0] > 490 or self.position[0] < 0:
             return 1 
@@ -65,63 +55,57 @@ class Snake():
                 return 1
         return 0
 
-        
-    def getHeadPos(self):
-        return self.position
-
-    def getBody(self):
+    #So the snakes body can be called upon
+    def getHead(self):
         return self.head
 
+#Apple is the "Food" that the player collects to get longer and to add score
 class Apple():
     def __init__(self):
-        #pygame.sprite.Sprite.__init__(self)
-        #self.image = pygame.transform.scale(pygame.image.load("Bruh.png"),(20,20))
-        #self.x = random.randint(50,450)
-        #self.y = random.randint(50,450)
-        #self.position = [self.x,self.y]
-        #self.image_init = self.image
-        #self.rect = self.image.get_rect()
-        #self.rect.centerx = random.randint(50,450)
-        #self.rect.centery=random.randint(50,450)
-        #self.position = (self.rect.centerx,self.rect.centery)
         self.position = [random.randint(50,450), random.randint(50,450)]
         self.AppleOnScreen = True
 
+    #This is so the Apple reapears after the player hits it
     def spawnApple(self):
         if self.AppleOnScreen == False:
             self.position = [random.randint(10,490), random.randint(10,490)]
             self.AppleOnScreen = True
         return self.position
 
+    #This is needed so after a collision to cause the above code to spawn another Apple
     def setAppleOnScreen(self):  
         self.AppleOnScreen = False
-    
-#all_sprites.add(Apple)
+
+#These are the Variables that need to be defined     
+speed = 5
+score = 0 
 res = (500,500)
 screen = pygame.display.set_mode(res)
+fps = pygame.time.Clock()
+#This is to make the classes variables to be called upon
 snake = Snake()
 Apple = Apple()
-fps = pygame.time.Clock()
 
+#A definition to call upon which will close the game
 def Lose():
     pygame.quit()
     sys.exit()
 
 
-#all_sprites_list.add(Apple)
-
+#The Loop which runs the game 
 while True: 
+    #So the game can be closed with the ESCAPE button and so it closes completely 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             Lose()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 Lose()
-    
-    #print(Apple.position, snake.position)
-    
+
+    #This defines pygame.key.get_pressed so the user can control the Snake
     keysPressed=pygame.key.get_pressed()
     
+    #This allows the user to use the WASD keys in order to steer the snake
     if keysPressed[ord('w')]:
         snake.direction="North"
     if keysPressed[ord('s')]:
@@ -130,10 +114,11 @@ while True:
         snake.direction="East"
     if keysPressed[ord('a')]:
         snake.direction="West"
-    #if keysPressed[ord('e')]:
-        #print(Apple.position, snake.position)
-
+    
+    #This is used to be able to call upon a new Apple being created
     ApplePos = Apple.spawnApple()
+    
+    #When the snake collides with an apple the score will be incresead, the apple will appear in a new random location and the snake will change to a new random color
     if(snake.move(ApplePos)==1):
         score += 1
         Apple.setAppleOnScreen()
@@ -142,17 +127,25 @@ while True:
         snake.b = (random.randint(0,255))
 
         
-
+    #Fills the screen with a white background
     screen.fill(pygame.Color(255,255,255))
     
-    for pos in snake.getBody():
+    #Draws the snake
+    for pos in snake.getHead():
         pygame.draw.rect(screen, pygame.Color(snake.r,snake.g,snake.b),pygame.Rect(pos[0], pos[1], 10, 10))
     
+    #Draws the Apple
     pygame.draw.rect(screen, pygame.Color(255,0,0), pygame.Rect(ApplePos[0],ApplePos[1],10,10))
 
-
+    #Causes the game to stop if the Snake collides with the walls or itself
     if (snake.Death()==1):
         Lose()
+    
+    #Adds the caption "Snake" along with the players score
     pygame.display.set_caption("Snake. Score: " + str(score))
+    
+    #Refreshes the screen
     pygame.display.update()
+    
+    #Sets the frames per second to 24
     fps.tick(24)
