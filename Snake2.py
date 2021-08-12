@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> d0c7824478132e24fc994dab40b1fab2183fea84
 import pygame
 import random
 import sys 
