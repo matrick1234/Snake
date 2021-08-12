@@ -1,4 +1,4 @@
-from FakeSnake import gameOver
+
 import pygame
 import random
 import sys 
