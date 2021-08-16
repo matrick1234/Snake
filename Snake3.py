@@ -12,9 +12,6 @@ class Snake():
         self.head = [[100,50],[90,50],[80,50]]
         self.Turning = self.direction
         self.color = [(random.randint(0,255)),(random.randint(0,255)),(random.randint(0,255))]
-        #self.r = (random.randint(0,255))
-        #self.g = (random.randint(0,255))
-        #self.b = (random.randint(0,255))
 
     #This is to stop the player from being able to turn 180 degrees
     def Turning(self,turn):
@@ -124,10 +121,6 @@ while True:
         score += 1
         Apple.setAppleOnScreen()
         snake.color = [(random.randint(0,255)),(random.randint(0,255)),(random.randint(0,255))]
-        #snake.r = (random.randint(0,255))
-        #snake.g = (random.randint(0,255))
-        #snake.b = (random.randint(0,255))
-
         
     #Fills the screen with a white background
     screen.fill(pygame.Color(255,255,255))
