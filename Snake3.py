@@ -10,19 +10,9 @@ class Snake():
         self.direction = "East" 
         self.position = [300,200]
         self.head = [[100,50],[90,50],[80,50]]
-        self.Turning = self.direction
+        #self.Turning = self.direction
         self.color = [(random.randint(0,255)),(random.randint(0,255)),(random.randint(0,255))]
-
-    #This is to stop the player from being able to turn 180 degrees
-    def Turning(self,turn):
-        if turn == "East" and not self.direction == "West":
-            self.direction = "East" 
-        if turn == "West" and not self.direction == "East":
-            self.direction = "West" 
-        if turn == "North" and not self.direction == "South":
-            self.direction = "North" 
-        if turn == "South" and not self.direction == "North":
-            self.direction = "South"   
+    
    
     #This type of movement so the snake is moving constantly and the user only controls when to turn
     def move(self, ApplePos):
@@ -34,6 +24,7 @@ class Snake():
             self.position[0] += speed
         if self.direction == "West":
             self.position[0] -= speed
+        #inserts the position of the the snake at the first/0th position of the snakes head
         self.head.insert(0,list(self.position))
         if self.position[0] < int(Apple.position[0]) + 10 and self.position[0] > int(Apple.position[0]) -10 and self.position[1] < int(Apple.position[1]) + 10 and self.position[1] > int(Apple.position[1]) - 10:
             return 1 
@@ -103,14 +94,14 @@ while True:
     #This defines pygame.key.get_pressed so the user can control the Snake
     keysPressed=pygame.key.get_pressed()
     
-    #This allows the user to use the WASD keys in order to steer the snake
-    if keysPressed[ord('w')]:
+    #This allows the user to use the WASD keys in order to steer the snake without being able to 180
+    if keysPressed[ord('w')] and not snake.direction == "South":
         snake.direction="North"
-    if keysPressed[ord('s')]:
+    if keysPressed[ord('s')] and not snake.direction == "North":
         snake.direction="South"
-    if keysPressed[ord('d')]:
+    if keysPressed[ord('d')] and not snake.direction == "West":
         snake.direction="East"
-    if keysPressed[ord('a')]:
+    if keysPressed[ord('a')] and not snake.direction == "East":
         snake.direction="West"
     
     #This is used to be able to call upon a new Apple being created
