@@ -11,7 +11,7 @@ class Snake():
         self.position = [300,200]
         self.head = [[100,50],[90,50],[80,50]]
         #self.Turning = self.direction
-        self.color = [(random.randint(0,255)),(random.randint(0,255)),(random.randint(0,255))]
+        self.color = [(random.randint(0,250)),(random.randint(0,250)),(random.randint(0,250))]
     
    
     #This type of movement so the snake is moving constantly and the user only controls when to turn
@@ -39,10 +39,6 @@ class Snake():
             return 1 
         elif self.position[1] > 490 or self.position[1] <0:
             return 1 
-        for snakeBody in self.head[1:]:
-            if self.position == snakeBody:
-                return 1
-        return 0
 
     #So the snakes body can be called upon
     def getHead(self):
